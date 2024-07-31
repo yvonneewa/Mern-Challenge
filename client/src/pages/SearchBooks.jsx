@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { SAVE_BOOK } from '../utils/mutations'; // Ensure this is the correct path
+import { SAVE_BOOK } from '../utils/mutations';
 
 function SearchBooks() {
-  const [searchResults, setSearchResults] = useState([]); // Assuming you fetch and set search results
+  const [searchResults, setSearchResults] = useState([]); 
   const [saveBook] = useMutation(SAVE_BOOK);
 
   // Function to handle saving a book
@@ -19,7 +19,7 @@ function SearchBooks() {
           link: book.link,
         },
       });
-      // Optionally provide user feedback or update UI after saving
+
     } catch (e) {
       console.error(e);
     }

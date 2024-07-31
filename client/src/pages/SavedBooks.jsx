@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
-import { REMOVE_BOOK } from '../utils/mutations'; // Ensure this is the correct path
+import { REMOVE_BOOK } from '../utils/mutations'; 
 
 function SavedBooks() {
   const { loading, error, data } = useQuery(GET_ME);
@@ -19,10 +19,10 @@ function SavedBooks() {
       await removeBook({
         variables: { bookId },
       });
-      // Optionally, you might want to update the UI or notify the user
+  
     } catch (e) {
       console.error('Error removing book:', e);
-      // Optionally, provide user feedback here
+    
     }
   };
 
