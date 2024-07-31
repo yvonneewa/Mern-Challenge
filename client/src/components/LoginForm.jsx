@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations'; // Ensure this path is correct
+import { LOGIN_USER } from '../utils/mutation';
 
 function LoginForm() {
   const [loginUser] = useMutation(LOGIN_USER);

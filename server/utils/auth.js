@@ -1,24 +1,34 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('./models');
 
-const authMiddleware = async (req) => {
-  let token = req.headers.authorization || '';
+// set token secret and expiration date
+const secret = 'mysecretsshhhhh';
+const expiration = '2h';
 
-  if (token.startsWith('Bearer ')) {
-    token = token.slice(7, token.length).trimLeft();
-  }
+module.exports = {
+  // function for our authenticated routes
+  authMiddleware: function ({ req }) {
+    let token = req.body.token || req.query.token || req.headers.authorization;
 
-  if (token) {
+    if (req.headers.authorization) {
+      token = token.split(' ').pop().trim();
+    }
+
+    if (!token) {
+      return req;
+    }
+
     try {
-      const { data } = jwt.verify(token, 'your_jwt_secret');
-      const user = await User.findById(data._id);
-      return { user };
+      const { data } = jwt.verify(token, secret, { maxAge: expiration });
+      req.user = data;
     } catch {
       console.log('Invalid token');
     }
-  }
 
-  return {};
+    return req;
+  },
+  signToken: function ({ username, email, _id }) {
+    const payload = { username, email, _id };
+
+    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
 };
-
-module.exports = authMiddleware;
